@@ -85,7 +85,7 @@ public class NotaGenerator { // main class
                 }
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                System.out.println(generateNota(id, paket, berat, tanggalTerima));
+                System.out.println(generateNota(id, paket, berat, tanggalTerima,true,0));
                 break;
             default:
                 System.out.print("================================\n" +
@@ -126,13 +126,13 @@ public class NotaGenerator { // main class
         return (newToken.length() >= 2)? token+"-"+newToken.substring(newToken.length()-2): token+"-"+"0"+newToken;
     }
 
-    public static String generateNota(String id, String paket, int berat, String tanggalTerima){ // fungsi untuk men-generate nota
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima,boolean printMessage, int diskon){ // fungsi untuk men-generate nota
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate date = LocalDate.parse(tanggalTerima, formatter);
         LocalDate endDate;
         int price;
 
-        switch (paket){
+        switch (paket.toLowerCase()){
             case "express":
                 endDate = date.plusDays(1);
                 price = 12000;
@@ -147,12 +147,14 @@ public class NotaGenerator { // main class
                 break;
         }
         berat = Math.max(2,berat);
-        System.out.println("Nota Laundry");
+        if (printMessage)
+            System.out.println("Nota Laundry");
+        String extra = (diskon != 0)? " = "+berat*price * (100-diskon)/100+" (Discount member 50%!!!)" :"";
         String out =
                 "ID    : "+id +"\n"+
-                "Paket : "+paket + "\n"+
+                "Paket : "+ paket + "\n"+
                 "Harga :\n" +
-                berat +" kg x "+price+" = "+berat*price+"\n" +
+                berat +" kg x "+price+" = "+berat*price+ extra+ "\n" +
                 "Tanggal Terima  : "+date.format(formatter)+"\n" +
                 "Tanggal Selesai : "+endDate.format(formatter);
 
