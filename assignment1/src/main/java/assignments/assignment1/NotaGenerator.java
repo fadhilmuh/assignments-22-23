@@ -104,7 +104,7 @@ public class NotaGenerator { // main class
         System.out.print("Pilihan : ");
     }
 
-    private static void showPaket() {
+    public static void showPaket() {
         System.out.println("+-------------Paket-------------+");
         System.out.println("| Express | 1 Hari | 12000 / Kg |");
         System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
@@ -154,11 +154,78 @@ public class NotaGenerator { // main class
                 "ID    : "+id +"\n"+
                 "Paket : "+ paket + "\n"+
                 "Harga :\n" +
-                berat +" kg x "+price+" = "+berat*price+ extra+ "\n" +
+                berat +" kg x "+price+" = "+berat*price+ "\n" +
                 "Tanggal Terima  : "+date.format(formatter)+"\n" +
                 "Tanggal Selesai : "+endDate.format(formatter);
 
         System.out.print((berat == 2)? "Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg\n":"");
+        return out;
+    }
+
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima,boolean printMessage){ // fungsi untuk men-generate nota
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date = LocalDate.parse(tanggalTerima, formatter);
+        LocalDate endDate;
+        int price;
+
+        switch (paket.toLowerCase()){
+            case "express":
+                endDate = date.plusDays(1);
+                price = 12000;
+                break;
+            case "fast":
+                endDate = date.plusDays(2);
+                price = 10000;
+                break;
+            default:
+                endDate = date.plusDays(3);
+                price = 7000;
+                break;
+        }
+        berat = Math.max(2,berat);
+        if (printMessage)
+            System.out.println("Nota Laundry");
+        String out =
+                "ID    : "+id +"\n"+
+                        "Paket : "+ paket + "\n"+
+                        "Harga :\n" +
+                        berat +" kg x "+price+" = "+berat*price+ "\n" +
+                        "Tanggal Terima  : "+date.format(formatter)+"\n" +
+                        "Tanggal Selesai : "+endDate.format(formatter);
+
+        System.out.print((berat == 2)? "Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg\n":"");
+        return out;
+    }
+
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima){ // fungsi untuk men-generate nota
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date = LocalDate.parse(tanggalTerima, formatter);
+        LocalDate endDate;
+        int price;
+
+        switch (paket.toLowerCase()){
+            case "express":
+                endDate = date.plusDays(1);
+                price = 12000;
+                break;
+            case "fast":
+                endDate = date.plusDays(2);
+                price = 10000;
+                break;
+            default:
+                endDate = date.plusDays(3);
+                price = 7000;
+                break;
+        }
+
+        String out =
+                "ID    : "+id +"\n"+
+                        "Paket : "+ paket + "\n"+
+                        "Harga :\n" +
+                        berat +" kg x "+price+" = "+berat*price+ "\n" +
+                        "Tanggal Terima  : "+date.format(formatter)+"\n" +
+                        "Tanggal Selesai : "+endDate.format(formatter);
+
         return out;
     }
 }

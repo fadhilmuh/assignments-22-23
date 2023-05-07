@@ -3,22 +3,21 @@ package assignments.assignment3.nota.service;
 import assignments.assignment3.nota.Nota;
 
 public class AntarService implements LaundryService{
+    private  int methodCallCount;
     @Override
     public String doWork() {
-        // TODO
-        return "";
+        this.methodCallCount++;
+        return "Sedang mengantar...";
     }
 
     @Override
     public boolean isDone() {
-        // TODO
-        return false;
+        return this.methodCallCount == 1;
     }
 
     @Override
     public long getHarga(int berat) {
-        // TODO
-        return 0;
+        return (berat <= 4)? 2000: 2000 + (long) (berat-4)*500;
     }
 
     @Override

@@ -40,7 +40,12 @@ public class LoginManager {
      * @return Member object yang berhasil mendaftar, return null jika gagal mendaftar.
      */
     public Member register(String nama, String noHp, String password) {
-        // TODO
-        return null;
+        // Create new id for new user and validate
+        String id = NotaGenerator.generateId(nama, noHp);
+        if (memberSystem.isMemberExist(id)){return null;}
+
+        Member newMember = new Member(nama, id, password);
+        memberSystem.addMember(newMember);
+        return newMember;
     }
 }

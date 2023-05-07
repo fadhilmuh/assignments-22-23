@@ -18,7 +18,7 @@ public class MainMenu {
     /**
      * Entry point for the CuciCuci System application.
      *
-     * @param args command line arguments, bisa kalian ignore.
+     * @param args command line arguments
      */
     public static void main(String[] args) {
         MainMenu mainMenu = new MainMenu(new Scanner(System.in), new LoginManager(new EmployeeSystem(), new MemberSystem()));
@@ -55,7 +55,7 @@ public class MainMenu {
      * Skips ke hari selanjutnya dan mengupdate sistem.
      */
     private void toNextDay() {
-        System.out.println("Kamu tidur hari ini... zzz...");
+        System.out.println("Kamu tidur hari ini... zzz...\n");
         NotaManager.toNextDay();
     }
 
@@ -65,17 +65,23 @@ public class MainMenu {
     void register() {
         System.out.println("Masukan nama Anda: ");
         String nama = in.nextLine();
+
         System.out.println("Masukan nomor handphone Anda: ");
         String noHp = in.nextLine();
+        while (!noHp.matches("[0-9]+")){
+            System.out.println("Nomor hp hanya menerima digit");
+            noHp = in.nextLine();
+        }
+
         System.out.println("Masukan password Anda: ");
         String password = in.nextLine();
 
         Member registeredMember = loginManager.register(nama, noHp, password);
         if(registeredMember == null){
-            System.out.printf("User dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHp);
+            System.out.printf("User dengan nama %s dan nomor hp %s sudah ada!\n\n", nama, noHp);
             return;
         }
-        System.out.printf("Berhasil membuat user dengan ID %s!\n", registeredMember.getId());
+        System.out.printf("Berhasil membuat user dengan ID %s!\n\n", registeredMember.getId());
     }
 
     /**
@@ -88,7 +94,7 @@ public class MainMenu {
         String inputPassword = in.nextLine();
         SystemCLI systemCLI = loginManager.getSystem(inputId);
         if(systemCLI == null){
-            System.out.println("ID atau password invalid.");
+            System.out.println("ID atau password invalid.\n");
             return;
         }
         systemCLI.login(in, inputId, inputPassword);

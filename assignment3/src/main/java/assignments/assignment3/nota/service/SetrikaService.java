@@ -1,22 +1,21 @@
 package assignments.assignment3.nota.service;
 
 public class SetrikaService implements LaundryService{
+    private int methodCallCount;
     @Override
     public String doWork() {
-        // TODO
-        return "";
+        this.methodCallCount++;
+        return "Sedang menyetrika...";
     }
 
     @Override
     public boolean isDone() {
-        // TODO
-        return false;
+        return (this.methodCallCount == 1);
     }
 
     @Override
     public long getHarga(int berat) {
-        // TODO
-        return 0;
+        return (long) berat * 1000;
     }
 
     @Override

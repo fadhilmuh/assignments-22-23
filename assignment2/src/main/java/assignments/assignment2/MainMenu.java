@@ -55,7 +55,6 @@ public class MainMenu {
      *  Method untuk menghandle perintah GeneraateUser
      */
     private static void handleGenerateUser(){
-        // TODO: handle generate user
         String nama, noHp, id;
 
         System.out.println("Masukan nama Anda:");
@@ -321,9 +320,11 @@ public class MainMenu {
      * @return object dari class Nota
      */
     public static Nota getNota(int idNota){
-        for (Nota nota: notaList)
-            if (nota.getIdNota() == idNota)
-                return nota;
+        if (notaList != null){
+            for (Nota nota : notaList)
+                if (nota.getIdNota() == idNota)
+                    return nota;
+        }
         return null;
     }
 

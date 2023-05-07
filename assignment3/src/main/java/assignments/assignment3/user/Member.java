@@ -1,6 +1,9 @@
 package assignments.assignment3.user;
 
 import assignments.assignment3.nota.Nota;
+
+import java.util.Arrays;
+
 public class Member {
     protected String id;
     protected String password;
@@ -30,7 +33,13 @@ public class Member {
      * @param nota Nota object untuk ditambahkan.
      */
     public void addNota(Nota nota) {
-        // TODO
+        try {
+            this.notaList = Arrays.copyOfRange(this.notaList, 0, this.notaList.length + 1);
+            this.notaList[notaList.length - 1] = nota;
+        } catch (Exception e){
+            this.notaList = new Nota[1];
+            this.notaList[0] = nota;
+        }
     }
 
     /**
@@ -40,11 +49,10 @@ public class Member {
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      */
     protected boolean authenticate(String password) {
-        // TODO
-        return false;
+        return (password.equals(this.password));
     }
 
-    // Dibawah ini adalah getter
+    // Di bawah ini adalah getter
 
     public String getNama() {
         return nama;
