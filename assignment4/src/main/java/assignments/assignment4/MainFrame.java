@@ -1,6 +1,5 @@
 package assignments.assignment4;
 import assignments.assignment3.LoginManager;
-import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.menu.EmployeeSystem;
 import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment4.gui.HomeGUI;
@@ -41,6 +40,7 @@ public class MainFrame extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
+        setLocationRelativeTo(null);
         loginablePanel = new Loginable[]{
                 employeeSystemGUI,
                 memberSystemGUI,
@@ -84,6 +84,7 @@ public class MainFrame extends JFrame{
      * */
     public void navigateTo(String page){
         // TODO
+        cards.show(mainPanel,page);
     }
 
     /**
@@ -97,9 +98,11 @@ public class MainFrame extends JFrame{
      * @return boolean yang menandakan apakah login berhasil atau gagal.
      * */
     public boolean login(String id, String password){
-        for (Loginable panel:
-                loginablePanel) {
-            // TODO
+        for (Loginable panel: loginablePanel) {
+            if (panel.login(id,password)){
+                MainFrame.getInstance().navigateTo(panel.getPageName());
+                return true;
+            }
         }
         return false;
     }

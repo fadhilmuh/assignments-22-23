@@ -39,6 +39,44 @@ public class LoginGUI extends JPanel {
      * */
     private void initGUI() {
         // TODO
+        JPanel contentsContainer = new JPanel(new GridBagLayout());
+        JPanel buttonsContainer = new JPanel(new GridBagLayout());
+
+        idLabel = new JLabel("Masukkan ID Anda:");
+        idTextField = new JTextField(20);
+
+        passwordLabel = new JLabel("Masukkan password Anda:");
+        passwordField = new JPasswordField();
+
+        loginButton = new JButton("Login");
+        backButton = new JButton("Kembali");
+        loginButton.addActionListener(e -> handleLogin());
+        backButton.addActionListener(e -> handleBack());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        contentsContainer.add(idLabel,gbc);
+        gbc.gridy++;
+        contentsContainer.add(idTextField,gbc);
+        gbc.gridy++;
+        contentsContainer.add(passwordLabel,gbc);
+        gbc.gridy++;
+        contentsContainer.add(passwordField,gbc);
+
+        gbc.gridy = 0;
+        buttonsContainer.add(loginButton,gbc);
+        gbc.gridy++;
+        buttonsContainer.add(backButton,gbc);
+
+        gbc.gridy = 0;
+        mainPanel.add(contentsContainer,gbc);
+        gbc.gridy++;
+        mainPanel.add(buttonsContainer,gbc);
     }
 
     /**
@@ -46,6 +84,9 @@ public class LoginGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
+        idTextField.setText(null);
+        passwordField.setText(null);
+        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
     }
 
     /**
@@ -53,6 +94,14 @@ public class LoginGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "loginButton"
      * */
     private void handleLogin() {
-        // TODO
+        String id = idTextField.getText(),
+                password = new String(passwordField.getPassword());
+
+        if (MainFrame.getInstance().login(id,password)){
+            idTextField.setText(null);
+            passwordField.setText(null);
+        } else {
+            JOptionPane.showMessageDialog(null, "ID atau password invalid!", "Info", JOptionPane.WARNING_MESSAGE);
+        }
     }
 }

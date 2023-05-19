@@ -123,7 +123,6 @@ public class Nota {
      */
     @Override
     public String toString(){
-        System.out.printf("\n[ID Nota = %d]\n",this.id);
         String notaStr = NotaGenerator.generateNota(member.getId(), paket, berat, tanggalMasuk);
         notaStr += "\n--- SERVICE LIST ---";
         for (LaundryService service: services){
@@ -134,7 +133,7 @@ public class Nota {
         if (this.sisaHariPengerjaan < 0 && this.kompensasi > 0){
             notaStr += String.format(" Ada kompensasi keterlambatan %d * 2000 hari",this.kompensasi);
         }
-        return notaStr;
+        return String.format("\n[ID Nota = %d]\n",this.id) + notaStr;
     }
 
     // Dibawah ini adalah getter
